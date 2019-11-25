@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProjectGym.Domain.Entities
 {
-    public class Customer
+    public class Customer : EntityBase
     {
 
     }
