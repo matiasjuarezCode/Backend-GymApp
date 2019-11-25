@@ -13,7 +13,7 @@ namespace ProjectGym.Infraestructure
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetConnectionStringSql);
+            optionsBuilder.UseSqlServer(GetConnectionStringWin);
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -39,6 +39,7 @@ namespace ProjectGym.Infraestructure
 
             modelBuilder.ApplyConfiguration<Employee>(new EmployeeMetaData());
             modelBuilder.ApplyConfiguration<Product>(new ProductMetaData());
+            modelBuilder.ApplyConfiguration<Customer>(new CustomerMetaData());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -60,5 +61,6 @@ namespace ProjectGym.Infraestructure
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }
