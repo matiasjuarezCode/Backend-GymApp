@@ -4,8 +4,13 @@ using System.Text;
 
 namespace ProjectGym.Domain.Entities
 {
-    public class Customer
-    {
+    public class Customer : EntityBase
+    { 
+        public int  MembershipNumber { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string Adress  { get; set; }
+        public string Phone { get; set; }
+        public DateTime DateAdmission { get; set; }
 
-    }
 }

@@ -4,7 +4,8 @@ namespace ProjectGym.Application.ConnectionString
 {
     public static class ConnectionString
     {
-        private const string Server = @"BAI-HTLJ362";
+        //private const string Server = @"BAI-HTLJ362";
+        private const string Server = @"DESKTOP-SODKE63\MSSQLSERVER2";
         private const string DataBase = "ProjectGym2";
         private const string User = "sa";
         private const string Password = "Mat19931993";
