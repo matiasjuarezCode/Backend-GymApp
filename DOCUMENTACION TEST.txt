@@ -1,0 +1,18 @@
+https://github.com/matiasjuarezCode/Backend-GymApp.git
+
+
+EMPLEADO:
+	-No puede ingresar 2 usuarios iguales o 2 legajos iguales, POST
+	-No se puede Modificar usuario ni legajo, si quieres hacerlo crea otro empleado, PUT
+	-GetAll solamente trae los empleados NO ELIMINADOS.- GET
+	-TODO PROBADO CRUD
+	-NINGUN CAMPO NULO
+PRODUCTOS:
+	-No se puede ingresar 2 Productos con mismo Codigo.- POST
+	-Al Modificar el producto, cambiando codigo vuelve a validar que no existan 2 iguales. PUT
+	-GetAll Solamente trae los productos NO ELIMINADOS.- GET
+	-TODO PROBADO CRUD
+	-NINGUN CAMPO NULO
+	-*****FALTA GETBYCODE, PARA LA VENTA DEL PRODUCTO
+CLIENTES:
+	-
