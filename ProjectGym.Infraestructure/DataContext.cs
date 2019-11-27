@@ -40,7 +40,9 @@ namespace ProjectGym.Infraestructure
             modelBuilder.ApplyConfiguration<Employee>(new EmployeeMetaData());
             modelBuilder.ApplyConfiguration<Product>(new ProductMetaData());
             modelBuilder.ApplyConfiguration<Customer>(new CustomerMetaData());
+
             modelBuilder.ApplyConfiguration<Plan>(new PlanMetaData());
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -63,6 +65,7 @@ namespace ProjectGym.Infraestructure
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
         public DbSet<Plan> Planes { get; set; }
     }
 }
