@@ -19,4 +19,8 @@ CLIENTES:
 	-NO SE PUEDE MOdificar el numero de socio ni fecha de ingreso - PUT
 	-GetAll solamente trae los clientes no eliminados -GET
 	-TODO PROBADO EL CRUD
+
+	-NUNGUN CAMPO NULO
+PLAN:   
+	-TODO PROBADO CRUD LISTO
 	-NUNGUN CAMPO NULO
