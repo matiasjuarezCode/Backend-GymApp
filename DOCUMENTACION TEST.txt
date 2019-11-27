@@ -20,3 +20,5 @@ CLIENTES:
 	-GetAll solamente trae los clientes no eliminados -GET
 	-TODO PROBADO EL CRUD
 	-NUNGUN CAMPO NULO
+PLAN:   
+	-TODO PROBADO CRUD LISTO
