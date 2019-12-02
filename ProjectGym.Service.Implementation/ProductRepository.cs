@@ -12,12 +12,10 @@ namespace ProjectGym.Service.Implementation
     public class ProductRepository : IProductRepository
     {
         private readonly IRepository<Product> _productRepository;
-        DataContext _context;
 
-        public ProductRepository(DataContext dataContext, IRepository<Product> productRepository)
+        public ProductRepository(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
-            _context = dataContext;
         }
         public async Task Delete(Product entity)
         {
