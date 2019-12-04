@@ -14,11 +14,9 @@ namespace ProjectGym.Service.Implementation
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly IRepository<Employee> _employeRepository;
-        DataContext _context;
 
-        public EmployeeRepository(DataContext context, IRepository<Employee> repositoryEmployee)
+        public EmployeeRepository(IRepository<Employee> repositoryEmployee)
         {
-            _context = context;
             _employeRepository = repositoryEmployee;
         }
 

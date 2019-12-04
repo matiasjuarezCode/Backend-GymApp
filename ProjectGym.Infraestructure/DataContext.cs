@@ -13,7 +13,7 @@ namespace ProjectGym.Infraestructure
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetConnectionStringWin);
+            optionsBuilder.UseSqlServer(GetConnectionStringSql);
 
             base.OnConfiguring(optionsBuilder);
         }

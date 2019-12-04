@@ -21,11 +21,10 @@ namespace ProjectGym.Application.RestApi.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISegurityRepository _segurityRepository;
 
-        private readonly DataContext _context;
+     
 
-        public EmployeeController(DataContext context, IEmployeeRepository employeeRepository, ISegurityRepository segurityRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, ISegurityRepository segurityRepository)
         {
-            _context = context;
             _employeeRepository = employeeRepository;
             _segurityRepository = segurityRepository;
         }
