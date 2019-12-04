@@ -13,7 +13,7 @@ namespace ProjectGym.Infraestructure
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetConnectionStringSql);
+            optionsBuilder.UseSqlServer("workstation id=gymDBtest.mssql.somee.com;packet size=4096;user id=matiasjuarez156_SQLLogin_1;pwd=sb86clrbd4;data source=gymDBtest.mssql.somee.com;persist security info=False;initial catalog=gymDBtest");
 
             base.OnConfiguring(optionsBuilder);
         }
