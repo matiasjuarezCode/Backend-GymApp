@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectGym.Domain.Entities;
 using ProjectGym.Infraestructure;
+using ProjectGym.Service.Interface;
 
 namespace ProjectGym.Application.RestApi.Controllers
 {
@@ -15,98 +16,103 @@ namespace ProjectGym.Application.RestApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomersController(DataContext context)
+        public CustomersController(ICustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
         // GET: api/Customers
         [HttpGet]
         [EnableCors("_myPolicy")]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
+        public async Task<IActionResult> Get()
         {
-            return await _context.Customers.Where(x=>!x.IsDelete).ToListAsync();
+            var customers = await _customerRepository.GetAll();
+            return Ok(customers.Where(x => !x.IsDelete));
         }
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
         [EnableCors("_myPolicy")]
-        public async Task<ActionResult<Customer>> GetCustomer(long id)
+        public async Task<IActionResult> GetById(long id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerRepository.GetById(id);
 
             if (customer == null)
             {
-                return NotFound();
+                return Ok("No Existe");
             }
 
-            return customer;
+            return Ok(customer);
         }
 
         // PUT: api/Customers/5
         [HttpPut("{id}")]
         [EnableCors("_myPolicy")]
-        public async Task<IActionResult> PutCustomer(long id, Customer customer)
+        public async Task<IActionResult> Put(Customer customer, long id)
         {
-            if (id != customer.Id)
-            {
-                return BadRequest();
-            }
+            var _customer = await _customerRepository.GetById(id);
 
-            _context.Entry(customer).State = EntityState.Modified;
-
-            try
+            if(_customer == null)
             {
-                await _context.SaveChangesAsync();
+                return Ok("No Existe");
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _customer.Id = id;
+                _customer.MembershipNumber = customer.MembershipNumber;
+                _customer.LastName = customer.LastName;
+                _customer.FirstName = customer.FirstName;
+                _customer.Adress = customer.Adress;
+                _customer.Phone = customer.Phone;
+                _customer.DateAdmission = customer.DateAdmission;
 
-            return NoContent();
+                await _customerRepository.Update(_customer);
+                return Ok(_customer);
+            }           
         }
 
         // POST: api/Customers
         [HttpPost]
         [EnableCors("_myPolicy")]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
+        public async Task<IActionResult> Post(Customer customer)
         {
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+            if(await VerifyExistsLastNameAsync(customer.LastName))
+            {
+                return Ok("Ya Existe Cliente");
+            }
+            else
+            {
+                await _customerRepository.Insert(customer);
+                return Ok(customer);
+            }
+        }
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+        private async Task<bool> VerifyExistsLastNameAsync(string lastName)
+        {
+            var customers = await _customerRepository.GetAll();
+            return customers.Any(x => x.LastName.ToLower() == lastName.ToLower());
+            
         }
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         [EnableCors("_myPolicy")]
-        public async Task<ActionResult<Customer>> DeleteCustomer(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var customerDelete = await _customerRepository.GetById(id);
+            if(customerDelete != null)
             {
-                return NotFound();
+                await _customerRepository.Delete(customerDelete);
+                return Ok(customerDelete);
             }
-
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
-
-            return customer;
+            else
+            {
+                return Ok("No Existe");
+            }
         }
 
-        private bool CustomerExists(long id)
-        {
-            return _context.Customers.Any(e => e.Id == id);
-        }
+        
     }
 }
