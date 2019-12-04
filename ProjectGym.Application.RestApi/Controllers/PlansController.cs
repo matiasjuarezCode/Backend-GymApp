@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectGym.Domain.Entities;
 using ProjectGym.Infraestructure;
+using ProjectGym.Service.Interface;
 
 namespace ProjectGym.Application.RestApi.Controllers
 {
@@ -14,93 +16,86 @@ namespace ProjectGym.Application.RestApi.Controllers
     [ApiController]
     public class PlansController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IPlanRepository _planRepository;
 
-        public PlansController(DataContext context)
+        public PlansController(IPlanRepository planRepository)
         {
-            _context = context;
+            _planRepository = planRepository;
         }
 
         // GET: api/Plans
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Plan>>> GetPlanes()
+        [EnableCors("_myPolicy")]
+        public async Task<IActionResult> Get()
         {
-            return await _context.Planes.Where(x=>!x.IsDelete).ToListAsync();
+            var plans = await _planRepository.GetAll();
+            return Ok(plans.Where(x => !x.IsDelete));
         }
 
         // GET: api/Plans/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Plan>> GetPlan(long id)
+        [EnableCors("_myPolicy")]
+        public async Task<IActionResult> GetById(long id)
         {
-            var plan = await _context.Planes.FindAsync(id);
+            var plan = await _planRepository.GetById(id);
 
             if (plan == null)
             {
-                return NotFound();
+                return Ok("NoExiste");
             }
 
-            return plan;
+            return Ok(plan);
         }
 
         // PUT: api/Plans/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlan(long id, Plan plan)
+        [EnableCors("_myPolicy")]
+        public async Task<IActionResult> Put(Plan plan, long id)
         {
-            if (id != plan.Id)
-            {
-                return BadRequest();
-            }
+            var _plan = await _planRepository.GetById(id);
 
-            _context.Entry(plan).State = EntityState.Modified;
-
-            try
+            if(_plan == null)
             {
-                await _context.SaveChangesAsync();
+                return Ok("ERRO NO EXISTE");
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!PlanExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                _plan.Id = id;
+                _plan.Description = plan.Description;
+                _plan.Price = plan.Price;
 
-            return NoContent();
+                await _planRepository.Update(_plan);
+                return Ok(_plan);
+            }
+            
         }
 
         // POST: api/Plans
         [HttpPost]
-        public async Task<ActionResult<Plan>> PostPlan(Plan plan)
+        public async Task<IActionResult> Post(Plan plan)
         {
-            _context.Planes.Add(plan);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPlan", new { id = plan.Id }, plan);
+            await _planRepository.Insert(plan);
+            return Ok(plan);
         }
 
         // DELETE: api/Plans/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Plan>> DeletePlan(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var plan = await _context.Planes.FindAsync(id);
-            if (plan == null)
+
+            var plandelete = await _planRepository.GetById(id);
+
+            if(plandelete != null)
             {
-                return NotFound();
+                await _planRepository.Delete(plandelete);
+                return Ok(plandelete);
             }
-
-            _context.Planes.Remove(plan);
-            await _context.SaveChangesAsync();
-
-            return plan;
+            else
+            {
+                return Ok("No Existe");
+            }
         }
 
-        private bool PlanExists(long id)
-        {
-            return _context.Planes.Any(e => e.Id == id);
-        }
+       
     }
 }
