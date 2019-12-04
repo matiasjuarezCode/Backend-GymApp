@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Infraestructure", "ProjectGym.Infraestructure\ProjectGym.Infraestructure.csproj", "{92D91B9D-F993-4435-987C-96EECDD8B16A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Infraestructure", "ProjectGym.Infraestructure\ProjectGym.Infraestructure.csproj", "{92D91B9D-F993-4435-987C-96EECDD8B16A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1", "1", "{D6E96BA0-8D0F-4FF4-9ACE-846885A74FD4}"
 EndProject
@@ -15,17 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Infraestructure", "5 - Infraestructure", "{AA572D68-CD8A-492D-BBDF-8A7D76EB98B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Application.ConnectionString", "ProjectGym.Application.ConnectionString\ProjectGym.Application.ConnectionString.csproj", "{43E928D8-5025-4EB0-AB35-A2017FE38AC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Application.ConnectionString", "ProjectGym.Application.ConnectionString\ProjectGym.Application.ConnectionString.csproj", "{43E928D8-5025-4EB0-AB35-A2017FE38AC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Domain", "ProjectGym.Domain\ProjectGym.Domain.csproj", "{2D5CF144-5351-430A-8E08-5258BC8F4301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Domain", "ProjectGym.Domain\ProjectGym.Domain.csproj", "{2D5CF144-5351-430A-8E08-5258BC8F4301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Service.Interface", "ProjectGym.Service.Inferface\ProjectGym.Service.Interface.csproj", "{EC416C3D-64AF-48E3-B16C-B31947CC183B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Service.Interface", "ProjectGym.Service.Inferface\ProjectGym.Service.Interface.csproj", "{EC416C3D-64AF-48E3-B16C-B31947CC183B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Service.Implementation", "ProjectGym.Service.Implementation\ProjectGym.Service.Implementation.csproj", "{99A950BD-38C5-4B3B-A1F7-279B20598D87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Service.Implementation", "ProjectGym.Service.Implementation\ProjectGym.Service.Implementation.csproj", "{99A950BD-38C5-4B3B-A1F7-279B20598D87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Application.Inyection", "ProjectGym.Application.Inyection\ProjectGym.Application.Inyection.csproj", "{9339FA1F-32E3-4322-AC30-A68B41E9FFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Application.Inyection", "ProjectGym.Application.Inyection\ProjectGym.Application.Inyection.csproj", "{9339FA1F-32E3-4322-AC30-A68B41E9FFCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectGym.Application.RestApi", "ProjectGym.Application.RestApi\ProjectGym.Application.RestApi.csproj", "{3661145D-F6D7-4778-8DE9-685DD91EAA8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectGym.Application.RestApi", "ProjectGym.Application.RestApi\ProjectGym.Application.RestApi.csproj", "{3661145D-F6D7-4778-8DE9-685DD91EAA8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
