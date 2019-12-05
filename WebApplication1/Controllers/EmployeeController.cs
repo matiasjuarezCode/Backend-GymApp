@@ -38,9 +38,12 @@ namespace WebApplication1.Controllers
 
                 var postResult = postJob.Result;
                 if (postResult.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Empleado Agregado";
                     return RedirectToAction("Index");
+                }
+                    
             }
-
             ModelState.AddModelError(string.Empty, "Error");
             return View(model);
 
@@ -83,6 +86,24 @@ namespace WebApplication1.Controllers
 
                 return View(employee);
             }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            using (var employeePut = new HttpClient())
+            {
+                employeePut.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                var response = employeePut.GetAsync("Employee/" + id.ToString());
+                response.Wait();
+
+                var result = response.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
     
     }
