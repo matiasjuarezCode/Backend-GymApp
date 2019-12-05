@@ -12,10 +12,11 @@ namespace WebApplication1.Controllers
 {
     public class EmployeeController : Controller
     {
+        private readonly string url = "http://gymapp.somee.com/api/Employee";
         public async Task<IActionResult> Index()
         {
             var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync("http://gymapp.somee.com/api/Employee");
+            var json = await httpClient.GetStringAsync(url);
             var listEmployees = JsonConvert.DeserializeObject<List<Employee>>(json);
 
             return View(listEmployees);
@@ -32,7 +33,7 @@ namespace WebApplication1.Controllers
         {
             using (var employeeNew = new HttpClient())
             {
-                employeeNew.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                employeeNew.BaseAddress = new Uri(url);
                 var postJob = employeeNew.PostAsJsonAsync<Employee>("Employee", model);
                 postJob.Wait();
 
@@ -55,7 +56,7 @@ namespace WebApplication1.Controllers
 
             using (var employeePut = new HttpClient())
             {
-                employeePut.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                employeePut.BaseAddress = new Uri(url);
                 var response = employeePut.GetAsync("Employee/" + id.ToString());
                 response.Wait();
 
@@ -76,35 +77,72 @@ namespace WebApplication1.Controllers
         {
             using (var emplo = new HttpClient())
             {
-                emplo.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
-                var putTask = emplo.PutAsJsonAsync<Employee>("Employee", employee);
+
+                emplo.BaseAddress = new Uri(url);
+                var response = emplo.GetAsync("Employee/" + employee.Id.ToString());
+                response.Wait();
+
+                var employeeGet = response.Result.Content.ReadAsAsync<Employee>();
+
+                employee.Password = employeeGet.Result.Password;
+
+            }
+
+            using (var emploPut = new HttpClient())
+            {
+                emploPut.BaseAddress = new Uri(url + employee.Id.ToString());
+
+                var putTask = emploPut.PutAsJsonAsync<Employee>("Employee/" + employee.Id, employee);
                 putTask.Wait();
 
                 var result = putTask.Result;
+
                 if (result.IsSuccessStatusCode)
+                {
+                    TempData["success"] = $"Empleado {employee.LastName +" "+ employee.FirstName } Modificado";
                     return RedirectToAction("Index");
+                }
 
                 return View(employee);
             }
+            
         }
 
         public IActionResult Delete(int id)
         {
+            using (var emplo = new HttpClient())
+            {
+
+                emplo.BaseAddress = new Uri(url);
+                var response = emplo.GetAsync("Employee/" + id.ToString());
+                response.Wait();
+
+                var employeeGet = response.Result.Content.ReadAsAsync<Employee>();
+
+                return View(employeeGet.Result);
+
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Employee employee)
+        {
             using (var employeePut = new HttpClient())
             {
-                employeePut.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
-                var response = employeePut.GetAsync("Employee/" + id.ToString());
+
+                employeePut.BaseAddress = new Uri(url);
+                var response = employeePut.DeleteAsync("Employee/" + employee.Id.ToString());
                 response.Wait();
 
                 var result = response.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                TempData["success"] = $"Empleado ELIMINADO";
+                return RedirectToAction("Index");
+
             }
 
-            return RedirectToAction("Index");
+            
         }
-    
+
     }
 }
