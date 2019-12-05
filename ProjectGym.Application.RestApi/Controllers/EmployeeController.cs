@@ -109,6 +109,7 @@ namespace ProjectGym.Application.RestApi.Controllers
                      _employee.Legacy = employee.Legacy;
                      _employee.LastName = employee.LastName;
                      _employee.FirstName = employee.FirstName;
+                     _employee.Adress = employee.Adress;
                      _employee.Phone = employee.Phone;
                      _employee.Username = employee.Username;
                      _employee.Password = employee.Password;
