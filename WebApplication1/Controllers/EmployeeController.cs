@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -18,6 +19,31 @@ namespace WebApplication1.Controllers
             var listEmployees = JsonConvert.DeserializeObject<List<Employee>>(json);
 
             return View(listEmployees);
+        }
+
+        public IActionResult New()
+        {
+            var model = new Employee();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult New(Employee model)
+        {
+            using (var employeeNew = new HttpClient())
+            {
+                employeeNew.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                var postJob = employeeNew.PostAsJsonAsync<Employee>("Employee", model);
+                postJob.Wait();
+
+                var postResult = postJob.Result;
+                if (postResult.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError(string.Empty, "Error");
+            return View(model);
+
         }
     }
 }
