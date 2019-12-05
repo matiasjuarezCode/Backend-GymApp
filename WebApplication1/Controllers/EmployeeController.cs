@@ -45,5 +45,45 @@ namespace WebApplication1.Controllers
             return View(model);
 
         }
+
+        public IActionResult Edit(int id)
+        {
+            Employee employee = null;
+
+            using (var employeePut = new HttpClient())
+            {
+                employeePut.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                var response = employeePut.GetAsync("Employee/" + id.ToString());
+                response.Wait();
+
+                var result = response.Result;
+                if(result.IsSuccessStatusCode)
+                {
+                    var readtask = result.Content.ReadAsAsync<Employee>();
+                    readtask.Wait();
+                    employee = readtask.Result;
+                }
+            }
+
+            return View(employee);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Employee employee)
+        {
+            using (var emplo = new HttpClient())
+            {
+                emplo.BaseAddress = new Uri("http://gymapp.somee.com/api/Employee");
+                var putTask = emplo.PutAsJsonAsync<Employee>("Employee", employee);
+                putTask.Wait();
+
+                var result = putTask.Result;
+                if (result.IsSuccessStatusCode)
+                    return RedirectToAction("Index");
+
+                return View(employee);
+            }
+        }
+    
     }
 }
