@@ -64,7 +64,9 @@
 
             </td>
             <td>
-                @Html.ActionLink("New", "Incription/New", new { id = item.Id }) |
+                <a href="Inscription/New/@item.Id" title="Inscribir" class="btn btn-primary">
+                    Inscribir
+                </a>
             </td>
         </tr>
 }
