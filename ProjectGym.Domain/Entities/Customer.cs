@@ -12,5 +12,6 @@ namespace ProjectGym.Domain.Entities
         public string Adress { get; set; }
         public string Phone { get; set; }
         public DateTime DateAdmission { get; set; }
+        public virtual ICollection<Inscription> Inscriptions { get; set; }
     }
 }
