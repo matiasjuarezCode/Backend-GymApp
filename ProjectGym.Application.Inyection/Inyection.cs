@@ -23,11 +23,13 @@ namespace ProjectGym.Application.Inyection
             servicios.AddTransient<IProductRepository, ProductRepository>();
             servicios.AddTransient<ICustomerRepository, CustomerRepository>();
             servicios.AddTransient<IPlanRepository, PlanRepository>();
+            servicios.AddTransient<IInscriptionRepository, InscriptionRepository>();
 
             servicios.AddTransient<IRepository<Employee>, Repository<Employee>>();
             servicios.AddTransient<IRepository<Product>, Repository<Product>>();
             servicios.AddTransient<IRepository<Customer>, Repository<Customer>>();
             servicios.AddTransient<IRepository<Plan>, Repository<Plan>>();
+            servicios.AddTransient<IRepository<Inscription>, Repository<Inscription>>();
 
 
 
