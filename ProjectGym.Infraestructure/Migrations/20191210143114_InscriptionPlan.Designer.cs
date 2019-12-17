@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectGym.Infraestructure;
 
 namespace ProjectGym.Infraestructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20191210143114_InscriptionPlan")]
+    partial class InscriptionPlan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,8 +103,6 @@ namespace ProjectGym.Infraestructure.Migrations
 
                     b.Property<DateTime>("ExpirationDate");
 
-                    b.Property<DateTime>("InscriptionDate");
-
                     b.Property<bool>("IsDelete");
 
                     b.Property<long>("PlanId");
@@ -114,27 +114,6 @@ namespace ProjectGym.Infraestructure.Migrations
                     b.HasIndex("PlanId");
 
                     b.ToTable("Inscriptions");
-                });
-
-            modelBuilder.Entity("ProjectGym.Domain.Entities.Payment", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("InscriptionId");
-
-                    b.Property<bool>("IsDelete");
-
-                    b.Property<decimal>("Money");
-
-                    b.Property<DateTime>("PaymentDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InscriptionId");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("ProjectGym.Domain.Entities.Plan", b =>
@@ -197,15 +176,6 @@ namespace ProjectGym.Infraestructure.Migrations
                         .WithMany("Inscriptions")
                         .HasForeignKey("PlanId")
                         .HasConstraintName("FK_Inscription_Plan")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ProjectGym.Domain.Entities.Payment", b =>
-                {
-                    b.HasOne("ProjectGym.Domain.Entities.Inscription", "Inscription")
-                        .WithMany("Payments")
-                        .HasForeignKey("InscriptionId")
-                        .HasConstraintName("FK_Payment_Inscription")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
